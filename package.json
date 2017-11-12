@@ -4,8 +4,8 @@
   "description": "This repository gives the developer an Express Starter to kick off there development fast",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon --exec npm run babel-node -- index.js",
+    "start": "node app/index.js",
+    "watch": "nodemon --exec npm run babel-node -- app/index.js",
     "build": "babel lib -d dist --presets es2015,stage-2",
     "babel-node": "babel-node --presets es2015"
   },
