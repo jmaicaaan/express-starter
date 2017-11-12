@@ -1,5 +1,5 @@
-import { helloWorldHandler } from './handlers/index';
+import { introHandler } from './handlers/index';
 
 export function routes(app) {
-  app.get('/', helloWorldHandler);
+  app.get('/', introHandler);
 };
