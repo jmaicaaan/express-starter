@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "watch": "nodemon --exec npm run babel-node -- app/index.js",
-    "build": "babel app -d dist --presets es2015",
-    "babel-node": "babel-node --presets es2015",
+    "build": "babel app -d dist",
+    "babel-node": "babel-node",
     "pretest": "npm run build",
     "test": "mocha ./dist/handlers/*/*.test.js"
   },
