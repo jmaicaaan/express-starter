@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jmaicaaan/express-starter.svg?branch=master)](https://travis-ci.org/jmaicaaan/express-starter)
+
 # express-starter
 
 
