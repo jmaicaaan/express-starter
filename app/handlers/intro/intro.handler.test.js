@@ -4,9 +4,6 @@ const server = require('supertest');
 
 describe('intro', () => {
   describe('#server', () => {
-    afterEach(() => {
-      app.close();
-    });
     it('should be able to access root /', done => {
       server(app)
         .get('/')

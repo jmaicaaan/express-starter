@@ -9,4 +9,5 @@ var _index = require('./handlers/index');
 
 function routes(app) {
   app.get('/', _index.introHandler);
+  app.post('/user', _index.userHandler);
 };
