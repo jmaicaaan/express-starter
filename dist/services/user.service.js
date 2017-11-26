@@ -4,6 +4,8 @@ var _models = require('../../models');
 
 var _models2 = _interopRequireDefault(_models);
 
+var _accessToken = require('./accessToken.service');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var UserService = {
@@ -11,8 +13,10 @@ var UserService = {
     return _models2.default.User.create({ username: name });
   },
   login: function login(username, password) {
-    // create access token using service
-    return _models2.default.User.findOne({ where: { username: username, password: password } }).then(function (user) {
+    return _models2.default.User.findOne({ include: [_models2.default.accessToken], where: { username: username, password: password } }).then(function (user) {
+      _accessToken.AccessTokenService.addUserToken(user.id);
+      return user;
+    }).then(function (user) {
       return user;
     });
   }

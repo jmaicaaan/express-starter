@@ -11,7 +11,11 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   accessToken.associate = (models) => {
-    models.accessToken.belongsTo(models.User);
+    models.accessToken.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
 
   return accessToken;

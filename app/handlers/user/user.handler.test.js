@@ -38,6 +38,7 @@ describe('#creation of user', () => {
       .send({ username: createdUser.username, password: createdUser.password })
       .expect(200)
       .end((err, res) => {
+        console.log('res.body', res.body);
         assert.equal(res.body.username, createdUser.username);
         done(err);
       });

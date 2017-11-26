@@ -1,11 +1,16 @@
 import models from '../../models';
+import { AccessTokenService } from './accessToken.service';
 
 const UserService = {
   addUser: (name) => {
     return models.User.create({ username: name });
   },
-  login: (username, password) => { // create access token using service
-    return models.User.findOne({ where: { username, password }})
+  login: (username, password) => {
+    return models.User.findOne({ include: [ models.accessToken ],  where: { username, password }})
+      .then((user) => {
+        AccessTokenService.addUserToken(user.id);
+        return user;
+      })
       .then((user) => user);
   }
 };

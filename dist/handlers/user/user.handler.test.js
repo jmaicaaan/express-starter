@@ -28,6 +28,7 @@ describe('#creation of user', function () {
 
   it('should allow user to login', function (done) {
     server.post('/user/login').send({ username: createdUser.username, password: createdUser.password }).expect(200).end(function (err, res) {
+      console.log('res.body', res.body);
       assert.equal(res.body.username, createdUser.username);
       done(err);
     });
