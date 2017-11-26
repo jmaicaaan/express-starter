@@ -6,7 +6,6 @@ const UserService = {
   },
   login: (username, password) => { // create access token using service
     return models.User.findOne({ where: { username, password }})
-      .then((user) => filterProperties(user))
       .then((user) => user);
   }
 };
@@ -15,13 +14,6 @@ const UserService = {
 
 function find() {
   return models.User.find();
-}
-
-function filterProperties(user) {
-  if (user && user.dataValues) {
-    delete user.dataValues.password;
-  }
-  return user;
 }
 
 module.exports.UserService = UserService;

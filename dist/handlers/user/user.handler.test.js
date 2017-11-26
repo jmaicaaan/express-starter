@@ -13,7 +13,7 @@ describe('#creation of user', function () {
       return bluebird.all([models.User.destroy({ truncate: true })]);
     }).then(function () {
       return models.User.create({ username: 'user123', password: 'Password123' }).then(function (user) {
-        return user.dataValues;
+        return user.get();
       });
     }).then(function (user) {
       createdUser = user;

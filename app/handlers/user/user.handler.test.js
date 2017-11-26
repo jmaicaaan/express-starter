@@ -15,7 +15,7 @@ describe('#creation of user', () => {
       })
       .then(() => {
         return models.User.create({ username: 'user123', password: 'Password123' })
-          .then(user => user.dataValues);
+          .then(user => user.get());
       })
       .then((user) => {
         createdUser = user;

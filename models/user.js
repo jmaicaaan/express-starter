@@ -8,6 +8,14 @@ module.exports = (sequelize, DataTypes) => {
       associate: function(models) {
         // associations can be defined here
       }
+    },
+    instanceMethods: {
+      toJSON: function() {
+        var values = Object.assign({}, this.get());
+        
+        delete values.password;
+        return values;
+      }
     }
   });
 

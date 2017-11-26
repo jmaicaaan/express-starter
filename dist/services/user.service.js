@@ -13,8 +13,6 @@ var UserService = {
   login: function login(username, password) {
     // create access token using service
     return _models2.default.User.findOne({ where: { username: username, password: password } }).then(function (user) {
-      return filterProperties(user);
-    }).then(function (user) {
       return user;
     });
   }
@@ -24,13 +22,6 @@ var UserService = {
 
 function find() {
   return _models2.default.User.find();
-}
-
-function filterProperties(user) {
-  if (user && user.dataValues) {
-    delete user.dataValues.password;
-  }
-  return user;
 }
 
 module.exports.UserService = UserService;
