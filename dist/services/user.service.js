@@ -11,7 +11,7 @@ var UserService = {
     return _models2.default.User.create({ username: name });
   },
   login: function login(username, password) {
-    // create access token
+    // create access token using service
     return _models2.default.User.findOne({ where: { username: username, password: password } }).then(function (user) {
       return filterProperties(user);
     }).then(function (user) {

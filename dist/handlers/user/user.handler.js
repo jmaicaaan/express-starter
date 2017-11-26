@@ -12,7 +12,7 @@ var addUser = function addUser(req, res) {
   var name = req.body.name || 'Lorem Ipsum';
 
   _user.UserService.addUser(name).then(function (user) {
-    res.send('Hello');
+    res.send(user);
   });
 };
 
