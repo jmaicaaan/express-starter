@@ -2,7 +2,7 @@ import express from 'express';
 import promise from 'bluebird';
 import { json, urlencoded } from 'body-parser';
 import { routes } from './routes';
-import models from '../models';
+import * as models from '../models';
 
 const app = express();
 

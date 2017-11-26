@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.associate = (models) => {
-    models.User.hasMany(models.Task);
+    // add association here for the user
   };
 
   return User;

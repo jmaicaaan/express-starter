@@ -1,5 +1,5 @@
-import app from './app.js';
-import models from '../models';
+import * as app from './app.js';
+import * as models from '../models';
 
 const port = process.env.PORT || 3000;
 app.set('port', port);
