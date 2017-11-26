@@ -15,10 +15,6 @@ describe('#creation of user', function () {
     return bluebird.all([models.User.destroy({ truncate: true })]);
   });
 
-  after(function () {
-    // console.log('models.sequelize', models.sequelize);
-  });
-
   it('should add a user', function (done) {
     server.post('/user').send({ name: 'JM Santos' }).expect(200, done);
   });
