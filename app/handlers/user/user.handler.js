@@ -1,16 +1,11 @@
-const models = require('../../../models');
+import * as models from '../../../models';
+import { UserService } from '../../services/user.service';
 
-function userHandler(req, res) {
+module.exports.userHandler = (req, res) => {
   let name = req.body.name || 'Lorem Ipsum';
-  addUser(name).then((user) => {
-    res.send(`Hello ${user.username}`);
-  });
-}
 
-function addUser(name) {
-  return models.User.create({
-    username: name
-  });
-}
-
-export { userHandler } 
+  UserService.addUser(name)
+    .then(user => {
+      res.send('Hello');
+    });
+};

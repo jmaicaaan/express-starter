@@ -16,6 +16,8 @@ describe('#creation of user', function () {
   });
 
   it('should add a user', function (done) {
-    server.post('/user').send({ name: 'JM Santos' }).expect(200, done);
+    server.post('/user').send({ name: 'JM Santos' }).expect(200).end(function (err, res) {
+      done(err);
+    });
   });
 });

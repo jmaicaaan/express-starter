@@ -19,6 +19,9 @@ describe('#creation of user', () => {
     server
       .post('/user')
       .send({ name: 'JM Santos' })
-      .expect(200, done)
+      .expect(200)
+      .end((err ,res ) => {
+        done(err);
+      })
   });
 });
