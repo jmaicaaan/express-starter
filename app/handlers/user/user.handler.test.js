@@ -1,5 +1,5 @@
 const assert = require('assert');
-const app = require('../../../dist/index');
+const app = require('../../../dist/app');
 const models = require('../../../models');
 const bluebird = require('bluebird');
 const server = require('supertest')(app);
@@ -13,10 +13,6 @@ describe('#creation of user', () => {
     return bluebird.all([
       models.User.destroy({ truncate: true })
     ]);
-  });
-
-  after(() => {
-    console.log('models.sequelize', models.sequelize);
   });
 
   it('should add a user', (done) => {

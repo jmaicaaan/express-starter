@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var app = require('../../../dist/index');
+var app = require('../../../dist/app');
 var models = require('../../../models');
 var bluebird = require('bluebird');
 var server = require('supertest')(app);
@@ -16,7 +16,7 @@ describe('#creation of user', function () {
   });
 
   after(function () {
-    console.log('models.sequelize', models.sequelize);
+    // console.log('models.sequelize', models.sequelize);
   });
 
   it('should add a user', function (done) {

@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var app = require('../../../dist/index');
+var app = require('../../../dist/app');
 var server = require('supertest');
 
 describe('intro', function () {

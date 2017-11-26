@@ -1,6 +1,6 @@
 const assert = require('assert');
-const app = require('../../../dist/index');
-const server = require('supertest');
+const app = require('../../../dist/app');
+const server = require('supertest')(app);
 
 describe('<%= name %>', () => {
   describe('#server', () => {
@@ -8,7 +8,7 @@ describe('<%= name %>', () => {
       app.close();
     });
     it('should be able to access root /', done => {
-      server(app)
+      server
         .get('/')
         .expect(200, done);
     });
