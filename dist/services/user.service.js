@@ -8,24 +8,29 @@ var _accessToken = require('./accessToken.service');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var UserService = {
-  addUser: function addUser(name) {
-    return _models2.default.User.create({ username: name });
-  },
-  login: function login(username, password) {
-    return _models2.default.User.findOne({ include: [_models2.default.accessToken], where: { username: username, password: password } }).then(function (user) {
-      _accessToken.AccessTokenService.addUserToken(user.id);
-      return user;
-    }).then(function (user) {
-      return user;
-    });
-  }
+var UserService;
+
+UserService = function UserService() {
+  this.accessTokenService = new _accessToken.AccessTokenService();
 };
 
-/** private methods */
+UserService.prototype.addUser = function (username, password) {
+  return _models2.default.User.create({ username: username, password: password });
+};
 
-function find() {
-  return _models2.default.User.find();
-}
+UserService.prototype.login = function (username, password) {
+  var userService = new UserService();
+  return _models2.default.User.findOne({ include: [_models2.default.accessToken], where: { username: username, password: password } }).then(function (user) {
+    userService.accessTokenService.addUserToken(user.id);
+    return user;
+  }).then(function (user) {
+    return user;
+  });
+};
 
+UserService.prototype.find = function () {
+  return _models2.default.User.find({ include: [_models2.default.accessToken] });
+};
+
+module.exports.userService = UserService;
 module.exports.UserService = UserService;

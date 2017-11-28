@@ -1,4 +1,6 @@
-import { introHandler, userHandler } from './handlers/index';
+import { introHandler, UserHandler } from './handlers/index';
+
+var userHandler = new UserHandler();
 
 module.exports.routes = (app) => {
   app.get('/', introHandler);
