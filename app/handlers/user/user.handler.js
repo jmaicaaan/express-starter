@@ -14,7 +14,7 @@ UserHandler.prototype.addUser = function(req, res) {
     });
 };
 
-UserHandler.prototype.login = functino(req, res) {
+UserHandler.prototype.login = function(req, res) {
   let username = req.body.username;
   let password = req.body.password;
 
