@@ -19,9 +19,10 @@ UserService.prototype.addUser = function (username, password) {
 };
 
 UserService.prototype.login = function (username, password) {
-  var userService = new UserService();
+  var _this = this;
+
   return _models2.default.User.findOne({ include: [_models2.default.accessToken], where: { username: username, password: password } }).then(function (user) {
-    userService.accessTokenService.addUserToken(user.id);
+    _this.accessTokenService.addUserToken(user.id);
     return user;
   }).then(function (user) {
     return user;
@@ -32,5 +33,4 @@ UserService.prototype.find = function () {
   return _models2.default.User.find({ include: [_models2.default.accessToken] });
 };
 
-module.exports.userService = UserService;
 module.exports.UserService = UserService;

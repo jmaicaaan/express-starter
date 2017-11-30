@@ -7,23 +7,21 @@ UserService = function() {
   this.accessTokenService = new AccessTokenService();
 };
 
-UserService.prototype.addUser = (username, password) => {
+UserService.prototype.addUser = function(username, password) {
   return models.User.create({ username, password });
 };
 
-UserService.prototype.login = (username, password) => {
-  var userService = new UserService();
+UserService.prototype.login = function(username, password) {
   return models.User.findOne({ include: [ models.accessToken ],  where: { username, password }})
     .then((user) => {
-      userService.accessTokenService.addUserToken(user.id);
+      this.accessTokenService.addUserToken(user.id);
       return user;
     })
     .then((user) => user);
 };
 
-UserService.prototype.find = () => {
+UserService.prototype.find = function() {
   return models.User.find({ include: [ models.accessToken ] });
 };
 
-module.exports.userService = UserService;
 module.exports.UserService = UserService;
