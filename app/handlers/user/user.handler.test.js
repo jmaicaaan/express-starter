@@ -4,7 +4,7 @@ const models = require('../../../models');
 const bluebird = require('bluebird');
 const server = require('supertest')(app);
 
-describe('#creation of user', () => {
+describe('#User', () => {
   let createdUser;
   before(() => {
     return models.sequelize.sync()
@@ -22,25 +22,30 @@ describe('#creation of user', () => {
       });
   });
 
-  it('should add a user', (done) => {
-    server
-      .post('/user')
-      .send({ name: 'JM Santos' })
-      .expect(200)
-      .end((err, res) => {
-        done(err);
-      });
+  describe('#User Creation', () => {
+    it('should add a user', (done) => {
+      let username = 'JM Santos';
+      server
+        .post('/user')
+        .send({ username })
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.body.username, username);
+          done(err);
+        });
+    });
   });
 
-  it('should allow user to login', (done) => {
-    server
-      .post('/user/login')
-      .send({ username: createdUser.username, password: createdUser.password })
-      .expect(200)
-      .end((err, res) => {
-        console.log('res.body', res.body);
-        assert.equal(res.body.username, createdUser.username);
-        done(err);
-      });
+  describe('#User Login', () => {
+    it('should allow user to login', (done) => {
+      server
+        .post('/user/login')
+        .send({ username: createdUser.username, password: createdUser.password })
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.body.username, createdUser.username);
+          done(err);
+        });
+    });
   });
 });

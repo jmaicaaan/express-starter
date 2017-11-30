@@ -12,10 +12,13 @@ UserService.prototype.addUser = function(username, password) {
 };
 
 UserService.prototype.login = function(username, password) {
-  return models.User.findOne({ include: [ models.accessToken ],  where: { username, password }})
+  return models.User.findOne({ where: { username, password }})
     .then((user) => {
-      this.accessTokenService.addUserToken(user.id);
-      return user;
+      return this.accessTokenService.addUserToken(user.id)
+        .then((accessToken) => {
+          user.get().accessToken = accessToken.get();
+          return user;
+        });
     })
     .then((user) => user);
 };

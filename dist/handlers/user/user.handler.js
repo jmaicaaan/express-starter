@@ -35,5 +35,4 @@ UserHandler.prototype.find = function (req, res) {
   });
 };
 
-module.exports.userHandler = UserHandler;
 module.exports.UserHandler = UserHandler;
