@@ -1,3 +1,3 @@
 
-export * from './intro/intro.route';
-export * from './user/user.route';
+export * from './intro/intro.handler';
+export * from './user/user.handler';
