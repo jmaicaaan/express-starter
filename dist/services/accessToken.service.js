@@ -18,4 +18,8 @@ AccessTokenService.prototype.addUserToken = function (userId) {
   return _models2.default.accessToken.create({ UserId: userId, token: token });
 };
 
+AccessTokenService.prototype.getUserByAccessToken = function (accessToken) {
+  return _models2.default.accessToken.find({ where: { token: accessToken } });
+};
+
 module.exports.AccessTokenService = AccessTokenService;

@@ -24,6 +24,6 @@ var app = (0, _express2.default)();
 
 app.use((0, _bodyParser.json)());
 app.use((0, _bodyParser.urlencoded)({ extended: false }));
-(0, _routes.routes)(app);
+app.use(_routes.router);
 
 module.exports = app;
