@@ -1,5 +1,9 @@
-function <%= name %>Handler(req, res) {
+import * as models from '../../../models';
+
+var <%= upCaseName %> = function() {};
+
+<%= upCaseName %>.prototype.test = function(req, res) {
   res.send('Hello World');
 }
 
-export { <%= name %>Handler } 
+module.exports.<%= upCaseName %> = <%= upCaseName %>;
