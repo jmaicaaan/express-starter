@@ -1,4 +1,3 @@
-import routeACL from '../route.acl.json';
 import { AccessTokenService } from '../services/accessToken.service';
 
 var RouteMiddleware;
@@ -7,16 +6,11 @@ RouteMiddleware = function() {
   this.accessTokenService = new AccessTokenService();
 };
 
-RouteMiddleware.prototype.acl = function(req, res, next) {
+RouteMiddleware.prototype.acl = function(req, res, next, modelRoutes) {
   const method = req.method;
-  const userACL = routeACL.routes.user;
-  const authorizedRoutes = userACL.authorized;
+  const authorizedRoutes = modelRoutes || [];
   const headers = req.headers;
-  let url = req.url;
-
-  if (!url.endsWith('/')) {
-    url += '/';
-  }
+  const url = req.url;
 
   authorizedRoutes.forEach((routes) => {
     if (routes.method === method && routes.url === url) {

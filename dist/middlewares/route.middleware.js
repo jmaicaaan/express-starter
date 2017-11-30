@@ -1,12 +1,6 @@
 'use strict';
 
-var _routeAcl = require('../route.acl.json');
-
-var _routeAcl2 = _interopRequireDefault(_routeAcl);
-
 var _accessToken = require('../services/accessToken.service');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var RouteMiddleware;
 
@@ -14,18 +8,13 @@ RouteMiddleware = function RouteMiddleware() {
   this.accessTokenService = new _accessToken.AccessTokenService();
 };
 
-RouteMiddleware.prototype.acl = function (req, res, next) {
+RouteMiddleware.prototype.acl = function (req, res, next, modelRoutes) {
   var _this = this;
 
   var method = req.method;
-  var userACL = _routeAcl2.default.routes.user;
-  var authorizedRoutes = userACL.authorized;
+  var authorizedRoutes = modelRoutes || [];
   var headers = req.headers;
   var url = req.url;
-
-  if (!url.endsWith('/')) {
-    url += '/';
-  }
 
   authorizedRoutes.forEach(function (routes) {
     if (routes.method === method && routes.url === url) {

@@ -1,5 +1,7 @@
-function introHandler(req, res) {
-  res.send('Hello World');
-}
+var IntroHandler = function() {};
 
-export { introHandler } 
+IntroHandler.prototype.intro = function(req, res) {
+  res.send('Hello World');
+};
+
+module.exports.IntroHandler = IntroHandler;

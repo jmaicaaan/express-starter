@@ -1,10 +1,9 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-function introHandler(req, res) {
-  res.send('Hello World');
-}
+var IntroHandler = function IntroHandler() {};
 
-exports.introHandler = introHandler;
+IntroHandler.prototype.intro = function (req, res) {
+  res.send('Hello World');
+};
+
+module.exports.IntroHandler = IntroHandler;

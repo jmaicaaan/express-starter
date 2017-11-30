@@ -1,14 +1,14 @@
 import express from 'express';
-import promise from 'bluebird';
 import { json, urlencoded } from 'body-parser';
-import { router } from './routes';
-import * as models from '../models';
+import { UserRoutes } from './routes/user.routes';
+import { IntroRoutes } from './routes/intro.routes';
 
 const app = express();
 
 app.use(json());
 app.use(urlencoded({ extended: false }));
-app.use(router);
 
+app.use('/', IntroRoutes);
+app.use('/user', UserRoutes);
 
 module.exports = app;
