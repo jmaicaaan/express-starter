@@ -1,12 +1,12 @@
 import express from 'express';
-import { UserHandler } from '../handlers/index';
-import { RouteMiddleware } from '../middlewares/route.middleware';
-import modelRoutes from './user.routes.json';
+import { UserHandler } from '../../handlers/index';
+import { RouteMiddleware } from '../../middlewares/route.middleware';
+import modelRoutes from './user.route.json';
 
 const UserRoutes = express.Router();
 
 const userHandler = new UserHandler();
-const routeMiddleware = new RouteMiddleware(); 
+const routeMiddleware = new RouteMiddleware();
 
 /**
  * Preseving the context `this`
@@ -21,6 +21,7 @@ UserRoutes.use((req, res, next) => {
   const routes = modelRoutes.authorized;
   routeMiddleware.acl(req, res, next, routes);
 });
+
 
 UserRoutes.get('/', userHandler.find);
 UserRoutes.post('/', userHandler.addUser);

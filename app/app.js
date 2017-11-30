@@ -1,7 +1,6 @@
 import express from 'express';
 import { json, urlencoded } from 'body-parser';
-import { UserRoutes } from './routes/user.routes';
-import { IntroRoutes } from './routes/intro.routes';
+import { IntroRoutes, UserRoutes } from './routes/index';
 
 const app = express();
 
