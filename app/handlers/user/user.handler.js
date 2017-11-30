@@ -3,9 +3,9 @@ import { UserService } from '../../services/user.service';
 
 var userService = new UserService();
 
-var UserHandler = () => {};
+var UserHandler = function() {};
 
-UserHandler.prototype.addUser = (req, res) => {
+UserHandler.prototype.addUser = function(req, res) {
   let username = req.body.username || 'Lorem Ipsum';
   let password = req.body.password;
   userService.addUser(username, password)
@@ -14,7 +14,7 @@ UserHandler.prototype.addUser = (req, res) => {
     });
 };
 
-UserHandler.prototype.login = (req, res) => {
+UserHandler.prototype.login = functino(req, res) {
   let username = req.body.username;
   let password = req.body.password;
 
@@ -24,12 +24,11 @@ UserHandler.prototype.login = (req, res) => {
     });
 };
 
-UserHandler.prototype.find = (req, res) => {
+UserHandler.prototype.find = function(req, res) {
   userService.find()
     .then((data) => {      
       res.send(data.get());
     });
 };
 
-module.exports.userHandler = UserHandler;
 module.exports.UserHandler = UserHandler;
