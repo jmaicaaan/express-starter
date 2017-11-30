@@ -26,7 +26,7 @@ describe('#User', () => {
     it('should add a user', (done) => {
       let username = 'JM Santos';
       server
-        .post('/user')
+        .post('/user/')
         .send({ username })
         .expect(200)
         .end((err, res) => {

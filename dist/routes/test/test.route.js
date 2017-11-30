@@ -1,0 +1,39 @@
+'use strict';
+
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
+var _index = require('../../handlers/index');
+
+var _route = require('../../middlewares/route.middleware');
+
+var _testRoutes = require('./test.routes.json');
+
+var _testRoutes2 = _interopRequireDefault(_testRoutes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TestRoutes = _express2.default.Router();
+
+var testHandler = new _index.TestHandler();
+var routeMiddleware = new _route.RouteMiddleware();
+
+/**
+ * Preseving the context `this`
+ * 
+ * When a function is passed as an argument(eg: callback)
+ * its context is lost. In order to preseve the context of 
+ * the function you can do a closure technique as 
+ * illustrated below in the acl middleware.
+ */
+
+TestRoutes.use(function (req, res, next) {
+  var routes = _testRoutes2.default.authorized;
+  routeMiddleware.acl(req, res, next, routes);
+});
+
+TestRoutes.get('/', testHandler.intro);
+
+module.exports.TestRoutes = TestRoutes;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2FwcC9yb3V0ZXMvdGVzdC90ZXN0LnJvdXRlLmpzIl0sIm5hbWVzIjpbIlRlc3RSb3V0ZXMiLCJSb3V0ZXIiLCJ0ZXN0SGFuZGxlciIsInJvdXRlTWlkZGxld2FyZSIsInVzZSIsInJlcSIsInJlcyIsIm5leHQiLCJyb3V0ZXMiLCJhdXRob3JpemVkIiwiYWNsIiwiZ2V0IiwiaW50cm8iLCJtb2R1bGUiLCJleHBvcnRzIl0sIm1hcHBpbmdzIjoiOztBQUFBOzs7O0FBQ0E7O0FBQ0E7O0FBQ0E7Ozs7OztBQUVBLElBQU1BLGFBQWEsa0JBQVFDLE1BQVIsRUFBbkI7O0FBRUEsSUFBTUMsY0FBYyx3QkFBcEI7QUFDQSxJQUFNQyxrQkFBa0IsNEJBQXhCOztBQUVBOzs7Ozs7Ozs7QUFTQUgsV0FBV0ksR0FBWCxDQUFlLFVBQUNDLEdBQUQsRUFBTUMsR0FBTixFQUFXQyxJQUFYLEVBQW9CO0FBQ2pDLE1BQU1DLFNBQVMscUJBQVlDLFVBQTNCO0FBQ0FOLGtCQUFnQk8sR0FBaEIsQ0FBb0JMLEdBQXBCLEVBQXlCQyxHQUF6QixFQUE4QkMsSUFBOUIsRUFBb0NDLE1BQXBDO0FBQ0QsQ0FIRDs7QUFNQVIsV0FBV1csR0FBWCxDQUFlLEdBQWYsRUFBb0JULFlBQVlVLEtBQWhDOztBQUVBQyxPQUFPQyxPQUFQLENBQWVkLFVBQWYsR0FBNEJBLFVBQTVCIiwiZmlsZSI6InRlc3Qucm91dGUuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgZXhwcmVzcyBmcm9tICdleHByZXNzJztcclxuaW1wb3J0IHsgVGVzdEhhbmRsZXIgfSBmcm9tICcuLi8uLi9oYW5kbGVycy9pbmRleCc7XHJcbmltcG9ydCB7IFJvdXRlTWlkZGxld2FyZSB9IGZyb20gJy4uLy4uL21pZGRsZXdhcmVzL3JvdXRlLm1pZGRsZXdhcmUnO1xyXG5pbXBvcnQgbW9kZWxSb3V0ZXMgZnJvbSAnLi90ZXN0LnJvdXRlcy5qc29uJztcclxuXHJcbmNvbnN0IFRlc3RSb3V0ZXMgPSBleHByZXNzLlJvdXRlcigpO1xyXG5cclxuY29uc3QgdGVzdEhhbmRsZXIgPSBuZXcgVGVzdEhhbmRsZXIoKTtcclxuY29uc3Qgcm91dGVNaWRkbGV3YXJlID0gbmV3IFJvdXRlTWlkZGxld2FyZSgpO1xyXG5cclxuLyoqXHJcbiAqIFByZXNldmluZyB0aGUgY29udGV4dCBgdGhpc2BcclxuICogXHJcbiAqIFdoZW4gYSBmdW5jdGlvbiBpcyBwYXNzZWQgYXMgYW4gYXJndW1lbnQoZWc6IGNhbGxiYWNrKVxyXG4gKiBpdHMgY29udGV4dCBpcyBsb3N0LiBJbiBvcmRlciB0byBwcmVzZXZlIHRoZSBjb250ZXh0IG9mIFxyXG4gKiB0aGUgZnVuY3Rpb24geW91IGNhbiBkbyBhIGNsb3N1cmUgdGVjaG5pcXVlIGFzIFxyXG4gKiBpbGx1c3RyYXRlZCBiZWxvdyBpbiB0aGUgYWNsIG1pZGRsZXdhcmUuXHJcbiAqL1xyXG5cclxuVGVzdFJvdXRlcy51c2UoKHJlcSwgcmVzLCBuZXh0KSA9PiB7XHJcbiAgY29uc3Qgcm91dGVzID0gbW9kZWxSb3V0ZXMuYXV0aG9yaXplZDtcclxuICByb3V0ZU1pZGRsZXdhcmUuYWNsKHJlcSwgcmVzLCBuZXh0LCByb3V0ZXMpO1xyXG59KTtcclxuXHJcblxyXG5UZXN0Um91dGVzLmdldCgnLycsIHRlc3RIYW5kbGVyLmludHJvKTtcclxuXHJcbm1vZHVsZS5leHBvcnRzLlRlc3RSb3V0ZXMgPSBUZXN0Um91dGVzOyJdfQ==
