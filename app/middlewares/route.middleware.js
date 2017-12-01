@@ -8,9 +8,13 @@ RouteMiddleware = function() {
 
 RouteMiddleware.prototype.acl = function(req, res, next) {
   if (hasAccessToken(req)) {
+    const accessToken = getAccessToken(req);
     return validateAccessToken(this.accessTokenService, accessToken)
       .then((valid) => {
-        return valid ? next() : unauthorizedError(res, next);
+        if (valid) {
+          return next(accessToken);
+        }
+        return unauthorizedError(err, next);
     });
   } else {
     return unauthorizedError(res, next);
@@ -23,8 +27,7 @@ function hasAccessToken(req) {
   if (!req && !req.headers) {
     return false;
   }
-  const headers = req.headers;
-  const accessToken = headers['authorization'];
+  const accessToken = getAccessToken(req);
   return accessToken ? true : false;
 }
 
@@ -42,6 +45,12 @@ function validateAccessToken(accessTokenService, accessToken) {
       }
       return false;
     });
-} 
+}
+
+function getAccessToken(req) {
+  const headers = req.headers;
+  const accessToken = headers['authorization'];
+  return accessToken;
+}
 
 module.exports.RouteMiddleware = RouteMiddleware;
