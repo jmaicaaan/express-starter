@@ -1,6 +1,5 @@
 import express from 'express';
 import { IntroHandler } from '../../handlers/index';
-import modelRoutes from './intro.route.json';
 
 const IntroRoutes = express.Router();
 

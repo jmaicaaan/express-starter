@@ -6,29 +6,27 @@ RouteMiddleware = function() {
   this.accessTokenService = new AccessTokenService();
 };
 
-RouteMiddleware.prototype.acl = function(req, res, next, modelRoutes) {
-  const method = req.method;
-  const authorizedRoutes = modelRoutes || [];
-  const headers = req.headers;
-  const url = req.url;
-
-  authorizedRoutes.forEach((routes) => {
-    if (routes.method === method && routes.url === url) {
-      const accessToken = headers['authorization'];
-      if (accessToken) {
-        return validateAccessToken(this.accessTokenService, accessToken)
-          .then((valid) => {
-            return valid ? next() : unauthorizedError(res, next);
-          });
-      } else {
-        return unauthorizedError(res, next);
-      }
-    }
-  });
-  next();
+RouteMiddleware.prototype.acl = function(req, res, next) {
+  if (hasAccessToken(req)) {
+    return validateAccessToken(this.accessTokenService, accessToken)
+      .then((valid) => {
+        return valid ? next() : unauthorizedError(res, next);
+    });
+  } else {
+    return unauthorizedError(res, next);
+  }
 };
 
 // Helpers
+
+function hasAccessToken(req) {
+  if (!req && !req.headers) {
+    return false;
+  }
+  const headers = req.headers;
+  const accessToken = headers['authorization'];
+  return accessToken ? true : false;
+}
 
 function unauthorizedError(res, next, message) {
   const error = new Error(message || 'User unauthorized');

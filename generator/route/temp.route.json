@@ -1,8 +1,0 @@
-{
-  "authorized": [
-    {
-      "method": "POST",
-      "url": "/"
-    }
-  ]
-}
