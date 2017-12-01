@@ -19,6 +19,7 @@ let resolveToServices = () => {
 };
 let handlerRootFile = path.join(resolveToHandlers(), 'index.js');
 let routeRootFile = path.join(resolveToRoutes(), 'index.js');
+let serviceRootFile = path.join(resolveToServices(), 'index.js');
 let paths = {
   handler: path.join(__dirname, 'generator', 'handler/*.**'),
   routes: path.join(__dirname, 'generator', 'route/*.**'),
@@ -129,7 +130,7 @@ gulp.task('remove-route-folder', (cb) => {
 /************************* Service tasks **************************/
 
 
-gulp.task('add-service', () => {
+gulp.task('create-service-file', () => {
   const name = yargs.argv.name;
   const destPath = path.join(resolveToServices(), name);
 
@@ -144,7 +145,31 @@ gulp.task('add-service', () => {
     .pipe(gulp.dest(destPath));
 });
 
-gulp.task('remove-service', (cb) => {
+gulp.task('add-service', ['create-service-file'], () => {
+  const name = yargs.argv.name;
+  const destPath = path.join(resolveToServices());
+  const line = `\nexport * from './${name}/${name}.service';`
+
+  return gulp.src(serviceRootFile)
+    .pipe(gulpInsert.append(line))
+    .pipe(gulp.dest(destPath))
+});
+
+gulp.task('remove-service', ['remove-service-folder'], () => {
+  const name = yargs.argv.name;
+  const destPath = path.join(resolveToServices());
+  let regex = new RegExp(name, 'gi');
+
+  return gulp.src(serviceRootFile)
+    .pipe(gulpRemove({
+      'filters': [
+        regex
+      ]
+    }))
+    .pipe(gulp.dest(destPath))
+});
+
+gulp.task('remove-service-folder', (cb) => {
   const name = yargs.argv.name;
   const routeFolder = path.join(resolveToServices(), name);
   del([routeFolder]).then((paths) => {

@@ -1,5 +1,5 @@
 import * as models from '../../../models';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../services/index';
 
 var userService = new UserService();
 

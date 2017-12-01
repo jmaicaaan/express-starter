@@ -1,5 +1,5 @@
-import models from '../../models';
-import { AccessTokenService } from './accessToken.service';
+import models from '../../../models';
+import { AccessTokenService } from '../index';
 
 var UserService;
 
