@@ -16,10 +16,13 @@ RouteMiddleware.prototype.acl = function(req, res, next) {
         if (valid) {
           return next();
         }
-        return unauthorizedError(err, next);
+        const error = this.util.unauthorizedError();
+        res.status(401);
+        return next(error);
     });
   } else {
-    const error = this.util.unauthorizedError(res);
+    const error = this.util.unauthorizedError();
+    res.status(401);
     return next(error);
   }
 };

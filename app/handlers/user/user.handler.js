@@ -29,8 +29,8 @@ UserHandler.prototype.login = function(req, res) {
 
 UserHandler.prototype.find = function(req, res) {
   userService.find()
-    .then((data) => {      
-      res.send(data.get());
+    .then((users) => {
+      res.send(users);
     });
 };
 

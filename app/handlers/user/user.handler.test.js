@@ -48,4 +48,42 @@ describe('#User', () => {
         });
     });
   });
+
+  describe('#User Me', () => {
+    let createdUser;
+    let accessToken;
+    before(() => {
+      return models.User.create({
+        username: 'user-test-' + Date.now(),
+        password: 'Password123'
+      })
+      .then((user) => {
+        createdUser = user;
+        return server
+          .post('/user/login')
+          .send({ username: createdUser.username, password: createdUser.password })
+          .then((res) => {
+            accessToken = res.body.accessToken.token;
+          });
+      });
+    });
+    it('should not allow unauthorized to access /user/me', (done) => {
+      server
+        .get('/user/me')
+        .expect(401)
+        .end((err, res) => {
+          done(err);
+        });
+    });
+    it('should not allow authorized to access /user/me', (done) => {
+      server
+        .get('/user/me')
+        .set('Authorization', accessToken)
+        .expect(200)
+        .end((err, res) => {
+          assert.equal(res.body.username, createdUser.username);
+          done(err);
+        });
+    });
+  });
 });

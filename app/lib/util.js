@@ -6,16 +6,21 @@ Util.prototype.getAccessToken = function(req) {
   return getAccessTokenFromHeaders(req);
 }
 
-Util.prototype.unauthorizedError = function(res, message) {
-  const error = createError(message || 'User unauthorized');
-  res.status(401);
+Util.prototype.unauthorizedError = function(message) {
+  const error = createError(message || 'User unauthorized', 'USER_UNAUTHORIZED');
+  return error;
+}
+
+Util.prototype.invalidLoginError = function(message) {
+  const error = createError(message || 'Invalid login credentials', 'INVALID_LOGIN_CREDENTIALS');
   return error;
 }
 
 // helpers
 
-function createError(message) {
+function createError(message, name) {
   const error = new Error(message);
+  error.name = name;
   return error;
 }
 

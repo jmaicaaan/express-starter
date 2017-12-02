@@ -1,10 +1,12 @@
 import models from '../../../models';
 import { AccessTokenService } from '../index';
+import { Util } from '../../../dist/lib/util';
 
 var UserService;
 
 UserService = function() {
   this.accessTokenService = new AccessTokenService();
+  this.util = new Util();
 };
 
 UserService.prototype.addUser = function(username, password) {
@@ -12,42 +14,44 @@ UserService.prototype.addUser = function(username, password) {
 };
 
 UserService.prototype.login = function(username, password) {
+
+  /**
+   * _.retrieve()
+   * Added as an instance method in the model to remove properties at an instance level
+   *
+   */
+
   return models.User.findOne({ where: { username, password }})
     .then((user) => {
-      if (user && user.get()) {
-        return this.accessTokenService.addUserToken(user.get().id)
+      if (user && user._retrieve()) {
+        user = user._retrieve();
+        return this.accessTokenService.addUserToken(user.id)
           .then((accessToken) => {
-            user.get().accessToken = accessToken.get();
+            user.accessToken = accessToken.get();
             return user;
         });
       } else {
-        throw createInvalidLoginError();
+        throw this.util.invalidLoginError();
       }
-    })
-    .then((user) => user);
+    });
 };
 
 UserService.prototype.find = function(filter) {
   if (!filter) {
     filter = {};
   }
-  return models.User.find(filter);
+  return models.User.find(filter)
+    .then((user) => user._retrieve());
 };
 
 UserService.prototype.findMe = function(accessToken) {
-  return models.User.find({ include: [{ 
+  return models.User.findOne({
+    include: [{
       model: models.accessToken,
       where: { token: accessToken }
     }]
-  });
+  })
+  .then((user) => user._retrieve());
 };
-
-// helpers
-
-function createInvalidLoginError() {
-  const error = new Error('Invalid login credentials');
-  error.name = 'INVALID_LOGIN_CREDENTIALS';
-  return error;
-}
 
 module.exports.UserService = UserService;
