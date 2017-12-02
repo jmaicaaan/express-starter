@@ -21,6 +21,9 @@ UserHandler.prototype.login = function(req, res) {
   userService.login(username, password)
     .then(user => {
       res.send(user);
+    })
+    .catch((err) => {
+      res.status(422).send(err);
     });
 };
 
