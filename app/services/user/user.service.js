@@ -7,6 +7,7 @@ var UserService;
 UserService = function() {
   this.accessTokenService = new AccessTokenService();
   this.util = new Util();
+  registerInstanceHooks.call(this);
 };
 
 UserService.prototype.addUser = function(username, password) {
@@ -53,5 +54,16 @@ UserService.prototype.findMe = function(accessToken) {
   })
   .then((user) => user._retrieve());
 };
+
+function registerInstanceHooks() {
+  models.User.beforeCreate((user, options) => {
+    if (user.password) {
+      return this.util.hashPassword(user.password)
+        .then((hash) => {
+          user.password = hash;
+        });
+    }
+  });
+}
 
 module.exports.UserService = UserService;

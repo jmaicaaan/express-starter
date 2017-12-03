@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+
 var Util;
 
 Util = function() {};
@@ -14,6 +16,11 @@ Util.prototype.unauthorizedError = function(message) {
 Util.prototype.invalidLoginError = function(message) {
   const error = createError(message || 'Invalid login credentials', 'INVALID_LOGIN_CREDENTIALS');
   return error;
+}
+
+Util.prototype.hashPassword = function(password) {
+  const saltRounds = 10;
+  return bcrypt.hash(password, saltRounds);
 }
 
 // helpers

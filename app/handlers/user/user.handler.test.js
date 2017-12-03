@@ -15,6 +15,7 @@ describe('#User', () => {
         ]);
       })
       .then(() => {
+        // used .get() to retrieve password because if _.retrieve() will remove it
         return models.User.create({ username: 'user123', password: 'Password123' })
           .then(user => user.get());
       })
