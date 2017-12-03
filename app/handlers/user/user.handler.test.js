@@ -10,6 +10,7 @@ describe('#User', () => {
     return models.sequelize.sync()
       .then(() => {
         return bluebird.all([
+          models.accessToken.destroy({ truncate: true }),
           models.User.destroy({ truncate: true })
         ]);
       })

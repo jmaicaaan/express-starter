@@ -9,9 +9,9 @@ RouteMiddleware = function() {
 };
 
 RouteMiddleware.prototype.acl = function(req, res, next) {
-  if (hasAccessToken(req, this.util)) {
+  if (hasAccessToken.call(this, req)) {
     const accessToken = this.util.getAccessToken(req);
-    return validateAccessToken(this.accessTokenService, accessToken)
+    return validateAccessToken.call(this, accessToken)
       .then((valid) => {
         if (valid) {
           return next();
@@ -29,16 +29,16 @@ RouteMiddleware.prototype.acl = function(req, res, next) {
 
 // Helpers
 
-function hasAccessToken(req, util) {
+function hasAccessToken(req) {
   if (!req && !req.headers) {
     return false;
   }
-  const accessToken = util.getAccessToken(req);
+  const accessToken = this.util.getAccessToken(req);
   return accessToken ? true : false;
 }
 
-function validateAccessToken(accessTokenService, accessToken) {
-  return accessTokenService.getUserByAccessToken(accessToken)
+function validateAccessToken(accessToken) {
+  return this.accessTokenService.getUserByAccessToken(accessToken)
     .then((user) => {
       if (user && user.get()) {
         return true;
